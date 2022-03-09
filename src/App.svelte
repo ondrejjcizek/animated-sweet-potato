@@ -1,36 +1,45 @@
 <script>
 	import ContactCard from "./ContactCard.svelte";
+  
+	let name = "Max";
+	let title = "";
+	let image = "";
+	let description = "";
+	let done = false;
 
-	let name = "Ondrej";
-	let job = "Developer";
-	let description = "asnfunasif  nsfna  nsanfa nn janf";
-	let image = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Gull_portrait_ca_usa.jpg/800px-Gull_portrait_ca_usa.jpg";
-
-	$: uppercaseName = name.toUpperCase();
-
-	function changeName() {
-		name = "Ondřej"
+	const addContact = () => {
+		done = true
 	}
-</script>
-
-<style>
-	h1 {
-		color: grey;
+  </script>
+  
+  <style>
+	#form {
+	  width: 30rem;
+	  max-width: 100%;
 	}
-</style>
+  </style>
+  
+  <div id="form">
+	<div class="form-control">
+	  <label for="userName">User Name</label>
+	  <input type="text" bind:value={name} id="userName" />
+	</div>
+	<div class="form-control">
+	  <label for="jobTitle">Job Title</label>
+	  <input type="text" bind:value={title} id="jobTitle" />
+	</div>
+	<div class="form-control">
+	  <label for="image">Image URL</label>
+	  <input type="text" bind:value={image} id="image" />
+	</div>
+	<div class="form-control">
+	  <label for="desc">Description</label>
+	  <textarea rows="3" bind:value={description} id="desc" />
+	</div>
+  </div>
 
-<h1>My name is {uppercaseName}, my age is !</h1>
+  <button on:click={addContact}>Add Contact Card</button>
 
-<button on:click={changeName}>Change Name</button>
-<input type="text" bind:value={uppercaseName}>
-<input type="text" bind:value={job}>
-<input type="text" bind:value={description}>
-<input type="text" bind:value={image}>
-<!-- <input type="text" value={name} on:input={nameInput}> -->
-
-
-<ContactCard 
-	userName={uppercaseName} 
-	jobTitle={job} 
-	{description} 
-	userImage={image} />
+  {#if done}
+  <ContactCard userName={name} jobTitle={title} {description} userImage={image} />
+  {/if}
